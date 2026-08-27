@@ -22,7 +22,7 @@ export default function ProductCard({ p }) {
       <div className="price"><b>{ARS(p.price)}</b>{p.oldPrice && <s>{ARS(p.oldPrice)}</s>}</div>
       {cuota(p) && <div className="cuotas">{p.installments}× de {cuota(p)} sin interés</div>}
       {p.freeShipping && <div className="cuotas" style={{ color: 'var(--muted)' }}>Envío gratis</div>}
-      <button className="btn btn-ghost" style={{ marginTop: 4, justifyContent: 'center' }}
+      <button className="btn btn-ghost add" style={{ justifyContent: 'center' }}
         onClick={() => cart.add(p.id)} disabled={p.stock < 1}>
         {p.stock < 1 ? 'Sin stock' : 'Agregar al carrito'}
       </button>
