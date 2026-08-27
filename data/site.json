@@ -1,0 +1,249 @@
+{
+  "brand": {
+    "name": "El cuarto de las maravillas",
+    "logoText": "El cuarto de las maravillas",
+    "logoImage": "/uploads/logo.webp",
+    "tagline": "Un mundo de deseo por descubrir",
+    "email": "",
+    "whatsapp": "541121789661",
+    "instagram": "",
+    "address": "Buenos Aires, Argentina"
+  },
+  "theme": {
+    "bg": "#f5f0ea",
+    "surface": "#ece3da",
+    "text": "#1c1512",
+    "accent": "#7a2331",
+    "accentDark": "#5c1a25",
+    "dark": "#2b231d",
+    "onDark": "#fbf6f1",
+    "fontDisplay": "Cormorant Garamond",
+    "fontUI": "Archivo",
+    "displayItalic": true,
+    "radius": "0px",
+    "heroHeight": "82vh",
+    "gridGap": "22px",
+    "bodyBgImage": ""
+  },
+  "topbar": {
+    "enabled": true,
+    "items": [
+      "Envíos 100% discretos",
+      "Tu privacidad, siempre protegida"
+    ]
+  },
+  "hero": [
+    {
+      "id": "h1",
+      "kicker": "Colección Íntima 01",
+      "title1": "Placer, en su forma",
+      "title2": "más refinada",
+      "copy": "Diseño depurado, materiales de grado premium y una experiencia de compra pensada para tu privacidad, de principio a fin.",
+      "cta": "Comprar ahora",
+      "href": "/catalogo",
+      "image": "/uploads/hero-new-1.png"
+    },
+    {
+      "id": "h2",
+      "kicker": "Nuevo en vibradores",
+      "title1": "Doble estimulación,",
+      "title2": "un solo vibrador",
+      "copy": "Bifun conquista el clítoris y el punto G a la vez. Silicona suave y resistente al agua.",
+      "cta": "Ver Bifun",
+      "href": "/producto/alive-bifun-vibrador-doble-estimulacion",
+      "image": "/uploads/hero-new-2.png"
+    },
+    {
+      "id": "h3",
+      "kicker": "Recién llegado",
+      "title1": "Tiemeyer, la pieza",
+      "title2": "más completa",
+      "copy": "Piel pellizcable, núcleo flexible y base con ventosa. Nuestra pieza más completa en dildos realistas.",
+      "cta": "Ver Tiemeyer",
+      "href": "/producto/pretty-love-tiemeyer-dildo-realista-25-cm",
+      "image": "/uploads/hero-new-3.png"
+    }
+  ],
+  "sections": {
+    "categoriesTitle": "Categorías",
+    "categoriesLink": "Ver todo el catálogo",
+    "newTitle": "Novedades",
+    "newSubtitle": "Lo último de la colección, recién llegado.",
+    "featuredTitle": "Destacados",
+    "featuredSubtitle": "Piezas insignia de la colección, seleccionadas por su diseño y calidad.",
+    "showCategories": true,
+    "showNew": true,
+    "showPromo": false,
+    "showFeatured": true,
+    "showTrust": false,
+    "showNewsletter": false
+  },
+  "promo": {
+    "kicker": "Ofertas por tiempo limitado",
+    "title1": "Combos y descuentos",
+    "title2": "hasta 30% off",
+    "copy": "Armá tu set ideal con nuestros combos curados o aprovechá descuentos en piezas seleccionadas de la colección.",
+    "cta": "Ver promociones",
+    "href": "/catalogo?oferta=1"
+  },
+  "trust": [
+    {
+      "icon": "✉",
+      "title": "Envíos 100% discretos"
+    },
+    {
+      "icon": "⚿",
+      "title": "Compra segura"
+    },
+    {
+      "icon": "⚙",
+      "title": "Privacidad garantizada"
+    },
+    {
+      "icon": "☏",
+      "title": "Atención personalizada"
+    }
+  ],
+  "newsletter": {
+    "kicker": "Newsletter",
+    "title": "Novedades y beneficios, directo a tu correo",
+    "copy": "Sin spam. Contenido curado, lanzamientos anticipados y ofertas exclusivas para suscriptoras.",
+    "cta": "Suscribirme"
+  },
+  "footer": {
+    "company": [
+      {
+        "label": "Sobre nosotros",
+        "href": "/pagina/sobre-nosotros"
+      },
+      {
+        "label": "Envíos",
+        "href": "/pagina/envios"
+      },
+      {
+        "label": "Preguntas frecuentes",
+        "href": "/pagina/faq"
+      },
+      {
+        "label": "Contacto",
+        "href": "/pagina/contacto"
+      }
+    ],
+    "legal": [
+      {
+        "label": "Privacidad",
+        "href": "/pagina/privacidad"
+      },
+      {
+        "label": "Términos y condiciones",
+        "href": "/pagina/terminos"
+      }
+    ],
+    "payments": [
+      "Transferencia",
+      "Efectivo"
+    ],
+    "copyright": "© 2026 El cuarto de las maravillas. Todos los derechos reservados."
+  },
+  "checkout": {
+    "mode": "whatsapp",
+    "whatsappMessage": "Hola! Quiero hacer un pedido:",
+    "freeShippingFrom": 60000,
+    "shippingCost": 4500
+  },
+  "ageGate": {
+    "enabled": true,
+    "title": "Contenido para adultos",
+    "copy": "Este sitio contiene productos para personas mayores de 18 años.",
+    "confirm": "Soy mayor de 18",
+    "deny": "Salir"
+  },
+  "categories": [
+    {
+      "id": "vibradores",
+      "name": "Vibradores",
+      "image": "/uploads/alive-bifun-149cm-1.png",
+      "showOnHome": true
+    },
+    {
+      "id": "estimuladores",
+      "name": "Estimuladores",
+      "image": "/uploads/calexotics-power-buddies-tongue-1.png",
+      "showOnHome": true
+    },
+    {
+      "id": "dildos",
+      "name": "Dildos",
+      "image": "/uploads/pretty-love-quentin-184mm-1.png",
+      "showOnHome": true
+    },
+    {
+      "id": "anal",
+      "name": "Anal",
+      "image": "/uploads/hard-steel-plug-corazon-7cm-1.png",
+      "showOnHome": true
+    },
+    {
+      "id": "lubricantes",
+      "name": "Lubricantes",
+      "image": "/uploads/lube-relaxing-130ml-2.png",
+      "showOnHome": true
+    },
+    {
+      "id": "masturbadores",
+      "name": "Masturbadores",
+      "image": "/uploads/baile-pink-pussy-222cm-2.png",
+      "showOnHome": true
+    }
+  ],
+  "brands": [
+    "Sexitive",
+    "Sextual",
+    "FyL",
+    "Pretty Love",
+    "RealSkin",
+    "Baile",
+    "Alive",
+    "CalExotics",
+    "Intimate Tease",
+    "Hard Steel"
+  ],
+  "pages": [
+    {
+      "slug": "sobre-nosotros",
+      "title": "Sobre nosotros",
+      "body": "<p>El cuarto de las maravillas nace de una idea simple: el bienestar íntimo merece el mismo cuidado en diseño y materiales que cualquier objeto que elegís para tu casa.</p>",
+      "published": true
+    },
+    {
+      "slug": "envios",
+      "title": "Envíos",
+      "body": "<p>Enviamos a todo el país en empaque neutro, sin marcas ni referencias al contenido.</p>",
+      "published": true
+    },
+    {
+      "slug": "faq",
+      "title": "Preguntas frecuentes",
+      "body": "<p>Escribinos por WhatsApp y te respondemos en el día.</p>",
+      "published": true
+    },
+    {
+      "slug": "contacto",
+      "title": "Contacto",
+      "body": "<p>Escribinos por WhatsApp y te respondemos a la brevedad.</p>",
+      "published": true
+    },
+    {
+      "slug": "privacidad",
+      "title": "Política de privacidad",
+      "body": "<p>No compartimos tus datos con terceros.</p>",
+      "published": true
+    },
+    {
+      "slug": "terminos",
+      "title": "Términos y condiciones",
+      "body": "<p>Compra sujeta a disponibilidad de stock.</p>",
+      "published": true
+    }
+  ]
+}

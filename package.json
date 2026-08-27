@@ -1,0 +1,24 @@
+{
+  "name": "velure",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/prepare-routes.mjs",
+    "predev": "node scripts/prepare-routes.mjs",
+    "prebuild": "node scripts/prepare-routes.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "node scripts/create-user.mjs"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.0.1",
+    "bcryptjs": "^2.4.3",
+    "next": "14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
