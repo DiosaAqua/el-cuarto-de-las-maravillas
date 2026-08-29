@@ -16,7 +16,10 @@ export default async function Producto({ params }) {
   if (!p) notFound();
   const site = await getSite();
   const cat = site.categories.find((c) => c.id === p.category);
-  const related = (await getProducts()).filter((x) => x.category === p.category && x.id !== p.id).slice(0, 4);
+  const related = (await getProducts())
+    .filter((x) => x.category === p.category && x.id !== p.id)
+    .sort((a, b) => (b.stock > 0 ? 1 : 0) - (a.stock > 0 ? 1 : 0))
+    .slice(0, 4);
   const d = off(p);
   return (
     <>
@@ -27,7 +30,10 @@ export default async function Producto({ params }) {
         <div className="pdp">
           <Gallery images={p.images} alt={p.name} />
           <div>
-            <div className="brand" style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>{p.brand}</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
+              <div className="brand" style={{ fontSize: 10.5, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>{p.brand}</div>
+              {p.sku && <span className="tag" style={{ fontSize: 11 }}>Código: {p.sku}</span>}
+            </div>
             <h1>{p.name}</h1>
             <p className="muted" style={{ fontSize: 14.5, margin: 0 }}>{p.shortDescription}</p>
             <div className="bigprice">
@@ -37,12 +43,16 @@ export default async function Producto({ params }) {
             </div>
             {cuota(p) && <div style={{ color: 'var(--accent-dark)', fontSize: 13.5 }}>{p.installments} cuotas sin interés de {cuota(p)}</div>}
             <div className="muted" style={{ fontSize: 13, marginTop: 6 }}>
-              {p.freeShipping ? 'Envío gratis · ' : ''}{p.stock > 0 ? p.stock + ' en stock' : 'Sin stock'} · SKU {p.sku}
+              {p.freeShipping ? 'Envío gratis · ' : ''}{p.stock > 0 ? p.stock + ' en stock' : 'Sin stock'}
             </div>
             <AddToCart id={p.id} stock={p.stock} />
             <a className="btn btn-ghost btn-block" style={{ width: '100%', justifyContent: 'center' }}
-              href={'https://wa.me/' + site.brand.whatsapp + '?text=' + encodeURIComponent('Hola! Quiero consultar por ' + p.name)}
-              target="_blank" rel="noreferrer">Consultar por WhatsApp</a>
+              href={'https://wa.me/' + site.brand.whatsapp + '?text=' + encodeURIComponent(
+                p.stock > 0
+                  ? 'Hola! Quiero hacer un pedido: ' + p.name + ' (' + p.sku + ') - ' + ARS(p.price)
+                  : 'Hola! Quiero consultar un producto ' + p.name + ' (' + p.sku + ')'
+              )}
+              target="_blank" rel="noreferrer">{p.stock > 0 ? 'Pedir por WhatsApp' : 'Consultar por WhatsApp'}</a>
 
             <div style={{ marginTop: 28 }}>
               <details className="acc" open>

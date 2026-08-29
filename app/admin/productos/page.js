@@ -10,7 +10,7 @@ export default async function Productos({ searchParams }) {
   const products = await db.read('products');
   const cats = (await db.read('site')).categories;
   const q = (searchParams.q || '').toLowerCase();
-  const list = q ? products.filter((p) => p.name.toLowerCase().includes(q)) : products;
+  const list = q ? products.filter((p) => p.name.toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q)) : products;
   return (
     <>
       <h1>Productos</h1>
@@ -20,7 +20,7 @@ export default async function Productos({ searchParams }) {
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginBottom: 20 }}>
         <Link className="btn btn-primary" href="/admin/productos/nuevo">+ Nuevo producto</Link>
         <form style={{ display: 'flex', gap: 8 }}>
-          <input name="q" defaultValue={searchParams.q || ''} placeholder="Buscar por nombre"
+          <input name="q" defaultValue={searchParams.q || ''} placeholder="Buscar por nombre o código"
             style={{ font: 'inherit', fontSize: 13.5, padding: '10px 12px', border: '1px solid var(--divider)', background: 'var(--bg)', color: 'var(--text)' }} />
           <button className="btn btn-ghost">Buscar</button>
         </form>

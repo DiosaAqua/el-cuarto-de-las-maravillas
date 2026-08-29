@@ -41,7 +41,7 @@
       "copy": "Diseño depurado, materiales de grado premium y una experiencia de compra pensada para tu privacidad, de principio a fin.",
       "cta": "Comprar ahora",
       "href": "/catalogo",
-      "image": "/uploads/hero-new-1.png"
+      "image": "/uploads/hero-new-1.webp"
     },
     {
       "id": "h2",
@@ -51,7 +51,7 @@
       "copy": "Bifun conquista el clítoris y el punto G a la vez. Silicona suave y resistente al agua.",
       "cta": "Ver Bifun",
       "href": "/producto/alive-bifun-vibrador-doble-estimulacion",
-      "image": "/uploads/hero-new-2.png"
+      "image": "/uploads/hero-new-2.webp"
     },
     {
       "id": "h3",
@@ -61,7 +61,7 @@
       "copy": "Piel pellizcable, núcleo flexible y base con ventosa. Nuestra pieza más completa en dildos realistas.",
       "cta": "Ver Tiemeyer",
       "href": "/producto/pretty-love-tiemeyer-dildo-realista-25-cm",
-      "image": "/uploads/hero-new-3.png"
+      "image": "/uploads/hero-new-3.webp"
     }
   ],
   "sections": {
@@ -162,38 +162,74 @@
     {
       "id": "vibradores",
       "name": "Vibradores",
-      "image": "/uploads/alive-bifun-149cm-1.png",
+      "image": "/uploads/alive-bifun-149cm-1.webp",
       "showOnHome": true
     },
     {
       "id": "estimuladores",
       "name": "Estimuladores",
-      "image": "/uploads/calexotics-power-buddies-tongue-1.png",
+      "image": "/uploads/calexotics-power-buddies-tongue-1.webp",
       "showOnHome": true
     },
     {
       "id": "dildos",
       "name": "Dildos",
-      "image": "/uploads/pretty-love-quentin-184mm-1.png",
+      "image": "/uploads/pretty-love-quentin-184mm-1.webp",
       "showOnHome": true
     },
     {
       "id": "anal",
       "name": "Anal",
-      "image": "/uploads/hard-steel-plug-corazon-7cm-1.png",
+      "image": "/uploads/hard-steel-plug-corazon-7cm-1.webp",
       "showOnHome": true
     },
     {
       "id": "lubricantes",
       "name": "Lubricantes",
-      "image": "/uploads/lube-relaxing-130ml-2.png",
+      "image": "/uploads/lube-relaxing-130ml-2.webp",
       "showOnHome": true
     },
     {
       "id": "masturbadores",
       "name": "Masturbadores",
-      "image": "/uploads/baile-pink-pussy-222cm-2.png",
+      "image": "/uploads/baile-pink-pussy-222cm-2.webp",
       "showOnHome": true
+    },
+    {
+      "id": "cueros",
+      "name": "Cueros",
+      "image": "",
+      "showOnHome": true
+    },
+    {
+      "id": "accesorios",
+      "name": "Accesorios",
+      "image": "",
+      "showOnHome": true
+    },
+    {
+      "id": "bdsm",
+      "name": "BDSM",
+      "image": "",
+      "showOnHome": true
+    },
+    {
+      "id": "parejas",
+      "name": "Parejas",
+      "image": "",
+      "showOnHome": false
+    },
+    {
+      "id": "lenceria-femenina",
+      "name": "Lencería Femenina",
+      "image": "",
+      "showOnHome": false
+    },
+    {
+      "id": "lenceria-masculina",
+      "name": "Lencería Masculina",
+      "image": "",
+      "showOnHome": false
     }
   ],
   "brands": [
@@ -206,7 +242,18 @@
     "Alive",
     "CalExotics",
     "Intimate Tease",
-    "Hard Steel"
+    "Hard Steel",
+    "Nacional",
+    "Adrien Lastic",
+    "Sexy & Funny",
+    "Blush",
+    "Fun Factory",
+    "NS Novelties",
+    "Satisfyer",
+    "Bswish",
+    "Shots",
+    "CNX",
+    "Crazy Bull"
   ],
   "pages": [
     {

@@ -1,13 +1,10 @@
 import Link from 'next/link';
 import { guard } from './guard';
 import * as db from '@/lib/db';
-import { ARS } from '@/lib/format';
 
 export default async function Dashboard({ searchParams }) {
   const user = await guard(null);
   const products = await db.read('products');
-  const orders = await db.read('orders');
-  const subs = await db.read('subscribers');
   const noStock = products.filter((p) => p.stock < 1);
   return (
     <>
@@ -18,11 +15,8 @@ export default async function Dashboard({ searchParams }) {
         <p className="err">Tu rol ({user.role}) no tiene acceso a esa sección. Pedile al administrador que te la habilite.</p>
       )}
 
-      <div className="grid3" style={{ marginBottom: 30 }}>
+      <div className="grid3" style={{ marginBottom: 30, maxWidth: 220 }}>
         <div className="stat"><b>{products.filter((p) => p.published).length}</b><span>Productos publicados</span></div>
-        <div className="stat"><b>{orders.filter((o) => o.status === 'nuevo').length}</b><span>Pedidos nuevos</span></div>
-        <div className="stat"><b>{ARS(orders.reduce((s, o) => s + o.subtotal, 0))}</b><span>Total pedido</span></div>
-        <div className="stat"><b>{subs.length}</b><span>Suscriptores</span></div>
       </div>
 
       {!!noStock.length && (

@@ -63,7 +63,7 @@ export async function saveProduct(prev, form) {
     badge: str(form.get('badge'), 30) || null,
     shortDescription: str(form.get('shortDescription'), 300),
     description: html(form.get('description'), 8000),
-    images: images.length ? images : ['/uploads/tex-p1.jpg'],
+    images: images.length ? images : ['/uploads/tex-p1.webp'],
     specs,
   };
 
@@ -161,7 +161,7 @@ export async function addSlide() {
   try { await auth.requirePermission('content'); } catch { return; }
   await db.update('site', (s) => {
     s.hero.push({ id: 'h' + Date.now().toString(36), kicker: 'Nuevo', title1: 'Título', title2: 'de la campaña',
-      copy: '', cta: 'Comprar ahora', href: '/catalogo', image: '/uploads/tex-hero1.jpg' });
+      copy: '', cta: 'Comprar ahora', href: '/catalogo', image: '/uploads/tex-hero1.webp' });
   });
   revalidatePath('/admin/slider');
 }
@@ -194,7 +194,7 @@ export async function saveCategories(prev, form) {
 export async function addCategory() {
   try { await auth.requirePermission('content'); } catch { return; }
   await db.update('site', (s) => {
-    s.categories.push({ id: 'cat' + Date.now().toString(36), name: 'Nueva categoría', image: '/uploads/tex-p1.jpg', showOnHome: false });
+    s.categories.push({ id: 'cat' + Date.now().toString(36), name: 'Nueva categoría', image: '/uploads/tex-p1.webp', showOnHome: false });
   });
   revalidatePath('/admin/categorias');
 }

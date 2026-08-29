@@ -77,11 +77,8 @@ export default async function EditarProducto({ params }) {
         </fieldset>
 
         <fieldset className="fs">
-          <legend>Galería</legend>
+          <legend>Fotos</legend>
           <ImagePicker name="images" defaultValue={v.images || []} library={library} />
-          <p className="muted" style={{ fontSize: 12.5, marginTop: 14 }}>
-            ¿Falta una foto? Subila en <Link href="/admin/medios">Imágenes</Link> y volvé acá: aparece al final de la biblioteca.
-          </p>
         </fieldset>
 
         <div className="bar"><Submit>{nuevo ? 'Crear producto' : 'Guardar cambios'}</Submit>
