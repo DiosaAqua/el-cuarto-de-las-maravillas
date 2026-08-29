@@ -1,12 +1,15 @@
 import { guard } from '../guard';
 import * as db from '@/lib/db';
+import { listUploads } from '@/lib/shop';
 import { saveContent } from '../actions';
 import { ActionForm, Submit, Text, Area, Check } from '@/components/admin-ui';
 import Rows from '@/components/Rows';
+import SinglePicker from '@/components/SinglePicker';
 
 export default async function Contenido() {
   await guard('content');
   const s = await db.read('site');
+  const library = await listUploads();
   return (
     <>
       <h1>Textos del sitio</h1>
@@ -26,9 +29,9 @@ export default async function Contenido() {
           <div style={{ marginTop: 16 }}>
             <Area label="Frase de marca" name="tagline" defaultValue={s.brand.tagline} style={{ minHeight: 60 }} />
           </div>
-          <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 90px', gap: 16, alignItems: 'end' }}>
-            <Text label="Imagen del logo" name="logoImage" defaultValue={s.brand.logoImage} hint="/uploads/… — subila primero en “Imágenes”. Vacío = se usa el texto del logo" />
-            {s.brand.logoImage && <img src={s.brand.logoImage} alt="" style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 8, background: 'var(--surface)' }} />}
+          <div className="f" style={{ marginTop: 16 }}>
+            <label>Imagen del logo<span className="hint"> — vacío = se usa el texto del logo</span></label>
+            <SinglePicker name="logoImage" defaultValue={s.brand.logoImage} library={library} ratio="1/1" />
           </div>
         </fieldset>
 

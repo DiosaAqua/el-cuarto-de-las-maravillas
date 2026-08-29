@@ -3,15 +3,33 @@ import * as db from '@/lib/db';
 import { listImages } from '@/lib/storage';
 import { uploadImages, deleteImage } from '../actions';
 import { ActionForm, Submit } from '@/components/admin-ui';
+import MediaFilter from '@/components/MediaFilter';
+
+/** Junta todas las rutas /uploads/... usadas en productos y en el sitio,
+ *  recorriendo los datos en vez de convertirlos a texto — con miles de
+ *  productos, buscar cada imagen dentro de un texto gigante es lentísimo. */
+function collectUsedImages(products, site) {
+  const used = new Set();
+  for (const p of products) for (const img of p.images || []) if (img) used.add(img);
+  const walk = (v) => {
+    if (typeof v === 'string') { if (v.startsWith('/uploads/')) used.add(v); }
+    else if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === 'object') Object.values(v).forEach(walk);
+  };
+  walk(site);
+  return used;
+}
 
 export default async function Medios() {
   await guard('media');
-  const files = (await listImages()).map((x) => x.name);
-  const used = JSON.stringify(await db.read('products')) + JSON.stringify(await db.read('site'));
+  const [files, products, site] = await Promise.all([listImages(), db.read('products'), db.read('site')]);
+  const used = collectUsedImages(products, site);
+  const items = files.map((x) => ({ name: x.name, ruta: '/uploads/' + x.name, enUso: used.has('/uploads/' + x.name) }));
+
   return (
     <>
       <h1>Imágenes</h1>
-      <p className="sub">{files.length} archivo(s) en /uploads. Copiá la ruta y pegala en el producto o la sección.</p>
+      <p className="sub">{items.length} archivo(s) en /uploads. Copiá la ruta y pegala en el producto o la sección — o elegilas directamente desde el selector de fotos en cada formulario.</p>
 
       <ActionForm action={uploadImages}>
         <fieldset className="fs">
@@ -25,26 +43,7 @@ export default async function Medios() {
         </fieldset>
       </ActionForm>
 
-      <div className="media" style={{ marginTop: 24 }}>
-        {files.map((n) => {
-          const ruta = '/uploads/' + n;
-          const enUso = used.includes(ruta);
-          return (
-            <figure key={n}>
-              <img src={ruta} alt={n} />
-              <figcaption>
-                <div style={{ marginBottom: 6 }}>{ruta}</div>
-                {enUso ? <span className="tag" style={{ fontSize: 9 }}>en uso</span> : (
-                  <ActionForm action={deleteImage}>
-                    <input type="hidden" name="name" value={n} />
-                    <Submit variant="btn-ghost" style={{ padding: '4px 8px', fontSize: 10.5 }}>Eliminar</Submit>
-                  </ActionForm>
-                )}
-              </figcaption>
-            </figure>
-          );
-        })}
-      </div>
+      <MediaFilter items={items} deleteAction={deleteImage} />
     </>
   );
 }

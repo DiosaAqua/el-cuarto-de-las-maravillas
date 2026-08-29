@@ -4,8 +4,8 @@
     "logoText": "El cuarto de las maravillas",
     "logoImage": "/uploads/logo.webp",
     "tagline": "Un mundo de deseo por descubrir",
-    "email": "",
-    "whatsapp": "541121789661",
+    "email": "marcosspaz72@gmail.com",
+    "whatsapp": "541127998400",
     "instagram": "",
     "address": "Buenos Aires, Argentina"
   },
@@ -152,7 +152,7 @@
     "shippingCost": 4500
   },
   "ageGate": {
-    "enabled": true,
+    "enabled": false,
     "title": "Contenido para adultos",
     "copy": "Este sitio contiene productos para personas mayores de 18 años.",
     "confirm": "Soy mayor de 18",

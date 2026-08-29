@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useState } from 'react';
+import ImageLibraryModal from './ImageLibraryModal';
 
 /**
  * Selector de imágenes del producto: subís fotos nuevas directo desde acá
@@ -11,6 +12,7 @@ export default function ImagePicker({ name, defaultValue = [], library: initialL
   const [library, setLibrary] = useState(initialLibrary);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  const [open, setOpen] = useState(false);
   const fileInput = useRef(null);
 
   const toggle = (src) => setSel((s) => (s.includes(src) ? s.filter((x) => x !== src) : [...s, src]));
@@ -78,21 +80,19 @@ export default function ImagePicker({ name, defaultValue = [], library: initialL
       )}
 
       {!!library.length && (
-        <details style={{ marginTop: 14 }}>
-          <summary style={{ cursor: 'pointer', fontSize: 12.5, color: 'var(--muted)' }}>O elegí una foto que ya subiste antes ({library.length})</summary>
-          <div className="media" style={{ marginTop: 12 }}>
-            {library.map((src) => {
-              const on = sel.includes(src);
-              return (
-                <figure key={src} onClick={() => toggle(src)} title={on ? 'Quitar de la galería' : 'Agregar a la galería'}
-                  style={{ cursor: 'pointer', borderColor: on ? 'var(--accent)' : 'var(--divider)', borderWidth: on ? 3 : 1, position: 'relative' }}>
-                  <img src={src} alt="" />
-                  {on && <span style={{ position: 'absolute', top: 6, left: 6, background: 'var(--accent)', color: '#fff', font: '700 10px/1 var(--font-ui)', padding: '4px 6px' }}>{sel.indexOf(src) + 1}</span>}
-                </figure>
-              );
-            })}
-          </div>
-        </details>
+        <button type="button" className="btn btn-ghost" style={{ fontSize: 12.5, marginTop: 14 }} onClick={() => setOpen(true)}>
+          O elegí una foto que ya subiste antes ({library.length})
+        </button>
+      )}
+
+      {open && (
+        <ImageLibraryModal
+          library={library}
+          selected={new Set(sel)}
+          onPick={toggle}
+          onClose={() => setOpen(false)}
+          title="Agregar o quitar de la galería"
+        />
       )}
     </div>
   );
