@@ -1,5 +1,5 @@
 import './globals.css';
-import { getSite, getProducts } from '@/lib/shop';
+import { getSite } from '@/lib/shop';
 import { ensureSeedAdmin } from '@/lib/auth';
 import CartProvider from '@/components/cart';
 import Header from '@/components/Header';
@@ -38,7 +38,6 @@ const fontHref = (t) => {
 export default async function RootLayout({ children }) {
   await ensureSeedAdmin();
   const site = await getSite();
-  const catalog = (await getProducts()).map(({ description, specs, ...p }) => p);
   return (
     <html lang="es">
       <head>
@@ -47,7 +46,7 @@ export default async function RootLayout({ children }) {
         <style dangerouslySetInnerHTML={{ __html: themeCss(site.theme) }} />
       </head>
       <body>
-        <CartProvider catalog={catalog} site={{ brand: site.brand, checkout: site.checkout }}>
+        <CartProvider site={{ brand: site.brand, checkout: site.checkout }}>
           <AgeGate config={site.ageGate} />
           <IntroLogo brand={site.brand} />
           <Header site={site} />

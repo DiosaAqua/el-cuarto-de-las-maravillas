@@ -9,25 +9,44 @@ export const useCart = () => useContext(Ctx);
 
 const load = (k) => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } };
 
-export default function CartProvider({ catalog, site, children }) {
+export default function CartProvider({ site, children }) {
   const [lines, setLines] = useState([]);
   const [favs, setFavs] = useState([]);
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState('');
   const [name, setName] = useState('');
+  const [productsById, setProductsById] = useState({});
   const timer = useRef();
+  const requested = useRef(new Set());
 
   useEffect(() => {
-    const ids = new Set(catalog.map((p) => p.id));
-    setLines(load(KEY).filter((l) => ids.has(l.id)));
+    setLines(load(KEY));
     setFavs(load(FAV));
-  }, [catalog]);
+  }, []);
+
+  // El catálogo completo no viaja al cliente (son miles de productos): acá se piden
+  // sólo los datos (precio, nombre, imagen) de lo que el usuario tiene en el carrito.
+  useEffect(() => {
+    const missing = [...new Set(lines.map((l) => l.id))].filter((id) => !requested.current.has(id));
+    if (!missing.length) return;
+    missing.forEach((id) => requested.current.add(id));
+    fetch('/api/cart-products?ids=' + missing.join(','))
+      .then((r) => r.json())
+      .then(({ products }) => {
+        setProductsById((prev) => {
+          const next = { ...prev };
+          for (const p of products) next[p.id] = p;
+          return next;
+        });
+      })
+      .catch(() => { missing.forEach((id) => requested.current.delete(id)); });
+  }, [lines]);
 
   const persist = (next) => { setLines(next); localStorage.setItem(KEY, JSON.stringify(next)); };
   const flash = (msg) => { setToast(msg); clearTimeout(timer.current); timer.current = setTimeout(() => setToast(''), 2200); };
 
   const api = useMemo(() => {
-    const find = (id) => catalog.find((p) => p.id === id);
+    const find = (id) => productsById[id];
     const detailed = lines.map((l) => ({ ...l, p: find(l.id) })).filter((l) => l.p);
     const subtotal = detailed.reduce((s, l) => s + l.p.price * l.qty, 0);
     const freeFrom = site.checkout.freeShippingFrom;
@@ -67,7 +86,7 @@ export default function CartProvider({ catalog, site, children }) {
         window.open('https://wa.me/' + site.brand.whatsapp + '?text=' + encodeURIComponent(body), '_blank');
       },
     };
-  }, [lines, favs, open, toast, name, catalog, site]);
+  }, [lines, favs, open, toast, name, productsById, site]);
 
   return (
     <Ctx.Provider value={api}>
