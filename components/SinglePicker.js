@@ -5,16 +5,33 @@ import ImageLibraryModal from './ImageLibraryModal';
 /**
  * Selector de UNA imagen (banners, categorías, logo, fondo): subís una foto
  * nueva directo desde acá (se guarda al instante) o elegís de las que ya
- * subiste antes, en una ventana con buscador. Guarda la ruta elegida en un
- * input oculto.
+ * subiste antes, en una ventana con buscador. La biblioteca de fotos ya
+ * subidas se pide recién al abrir esa ventana — con miles de fotos, mandarla
+ * de entrada en cada selector de la página la haría carguísima.
  */
-export default function SinglePicker({ name, defaultValue = '', library: initialLibrary = [], ratio = '16/10' }) {
+export default function SinglePicker({ name, defaultValue = '', ratio = '16/10' }) {
   const [value, setValue] = useState(defaultValue || '');
-  const [library, setLibrary] = useState(initialLibrary);
+  const [library, setLibrary] = useState(null); // null = todavía no se pidió
+  const [loadingLib, setLoadingLib] = useState(false);
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const fileInput = useRef(null);
+
+  const openLibrary = async () => {
+    setOpen(true);
+    if (library !== null) return;
+    setLoadingLib(true);
+    try {
+      const res = await fetch('/api/admin/upload');
+      const data = await res.json();
+      setLibrary(res.ok ? data.urls : []);
+    } catch {
+      setLibrary([]);
+    } finally {
+      setLoadingLib(false);
+    }
+  };
 
   const upload = async (files) => {
     if (!files.length) return;
@@ -26,7 +43,7 @@ export default function SinglePicker({ name, defaultValue = '', library: initial
       const res = await fetch('/api/admin/upload', { method: 'POST', body });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'No se pudo subir la imagen.');
-      setLibrary((l) => [...data.urls, ...l]);
+      setLibrary((l) => [...data.urls, ...(l || [])]);
       setValue(data.urls[0]);
     } catch (e) {
       setError(e.message || 'No se pudo subir la imagen.');
@@ -60,11 +77,9 @@ export default function SinglePicker({ name, defaultValue = '', library: initial
               style={{ display: 'none' }} onChange={(e) => upload(e.target.files)} />
             {uploading ? 'Subiendo…' : <>📷 Hacé clic o arrastrá una foto nueva</>}
           </div>
-          {!!library.length && (
-            <button type="button" className="btn btn-ghost" style={{ fontSize: 12, alignSelf: 'flex-start' }} onClick={() => setOpen(true)}>
-              Elegir de las fotos ya subidas ({library.length})
-            </button>
-          )}
+          <button type="button" className="btn btn-ghost" style={{ fontSize: 12, alignSelf: 'flex-start' }} onClick={openLibrary}>
+            Elegir de las fotos ya subidas
+          </button>
           {value && (
             <button type="button" className="btn btn-ghost" style={{ fontSize: 12, alignSelf: 'flex-start' }} onClick={() => setValue('')}>Quitar imagen</button>
           )}
@@ -74,7 +89,8 @@ export default function SinglePicker({ name, defaultValue = '', library: initial
 
       {open && (
         <ImageLibraryModal
-          library={library}
+          library={library || []}
+          loading={loadingLib}
           selected={value ? new Set([value]) : null}
           onPick={(src) => { setValue(src); setOpen(false); }}
           onClose={() => setOpen(false)}

@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
  *  en la biblioteca, mostrarlos todos sueltos en la página la haría
  *  interminable — acá quedan contenidos en una ventana con scroll propio,
  *  y el buscador ayuda a encontrar la foto por nombre sin tener que scrollear. */
-export default function ImageLibraryModal({ library, selected, onPick, onClose, title = 'Elegí una foto' }) {
+export default function ImageLibraryModal({ library, loading, selected, onPick, onClose, title = 'Elegí una foto' }) {
   const [q, setQ] = useState('');
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -21,7 +21,8 @@ export default function ImageLibraryModal({ library, selected, onPick, onClose, 
           <button type="button" className="btn btn-ghost" onClick={onClose}>Cerrar ✕</button>
         </div>
         <div className="picker-body media">
-          {filtered.map((src) => {
+          {loading && <p className="muted" style={{ padding: 8 }}>Cargando…</p>}
+          {!loading && filtered.map((src) => {
             const on = selected?.has(src);
             return (
               <figure key={src} onClick={() => onPick(src)} title={title}
@@ -30,7 +31,7 @@ export default function ImageLibraryModal({ library, selected, onPick, onClose, 
               </figure>
             );
           })}
-          {!filtered.length && <p className="muted" style={{ padding: 8 }}>Sin resultados para “{q}”.</p>}
+          {!loading && !filtered.length && <p className="muted" style={{ padding: 8 }}>Sin resultados para “{q}”.</p>}
         </div>
       </div>
     </div>

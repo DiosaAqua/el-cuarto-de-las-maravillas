@@ -5,6 +5,20 @@ import * as storage from '@/lib/storage';
 
 const OK_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif'];
 
+/** Biblioteca de imágenes ya subidas, para los selectores de foto del admin.
+ *  Se pide bajo demanda (al abrir el selector) en vez de mandarla como prop
+ *  en cada página — con miles de imágenes, repetirla en cada selector infla
+ *  muchísimo el HTML de la página. */
+export async function GET() {
+  try {
+    await auth.requirePermission('media');
+  } catch {
+    return NextResponse.json({ error: 'No tenés permisos.' }, { status: 403 });
+  }
+  const files = await storage.listImages();
+  return NextResponse.json({ urls: files.map((f) => f.url) });
+}
+
 /** Subida de imágenes desde el propio formulario de producto (sin pasar por /admin/medios). */
 export async function POST(req) {
   try {

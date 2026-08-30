@@ -7,12 +7,10 @@ import { ActionForm, Submit, Text, Area, Check, Field } from '@/components/admin
 import RichText from '@/components/RichText';
 import ImagePicker from '@/components/ImagePicker';
 import Rows from '@/components/Rows';
-import { listUploads } from '@/lib/shop';
 
 export default async function EditarProducto({ params }) {
   await guard('products');
   const site = await db.read('site');
-  const library = await listUploads();
   const nuevo = params.id === 'nuevo';
   const p = nuevo ? null : (await db.read('products')).find((x) => x.id === params.id);
   if (!nuevo && !p) notFound();
@@ -78,7 +76,7 @@ export default async function EditarProducto({ params }) {
 
         <fieldset className="fs">
           <legend>Fotos</legend>
-          <ImagePicker name="images" defaultValue={v.images || []} library={library} />
+          <ImagePicker name="images" defaultValue={v.images || []} />
         </fieldset>
 
         <div className="bar"><Submit>{nuevo ? 'Crear producto' : 'Guardar cambios'}</Submit>

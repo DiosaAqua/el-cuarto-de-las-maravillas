@@ -1,6 +1,5 @@
 import { guard } from '../guard';
 import * as db from '@/lib/db';
-import { listUploads } from '@/lib/shop';
 import { saveContent } from '../actions';
 import { ActionForm, Submit, Text, Area, Check } from '@/components/admin-ui';
 import Rows from '@/components/Rows';
@@ -9,7 +8,6 @@ import SinglePicker from '@/components/SinglePicker';
 export default async function Contenido() {
   await guard('content');
   const s = await db.read('site');
-  const library = await listUploads();
   return (
     <>
       <h1>Textos del sitio</h1>
@@ -31,7 +29,7 @@ export default async function Contenido() {
           </div>
           <div className="f" style={{ marginTop: 16 }}>
             <label>Imagen del logo<span className="hint"> — vacío = se usa el texto del logo</span></label>
-            <SinglePicker name="logoImage" defaultValue={s.brand.logoImage} library={library} ratio="1/1" />
+            <SinglePicker name="logoImage" defaultValue={s.brand.logoImage} ratio="1/1" />
           </div>
         </fieldset>
 

@@ -7,9 +7,10 @@ import ImageLibraryModal from './ImageLibraryModal';
  * (se guardan al instante) o elegís de las que ya subiste antes. Guarda las
  * rutas en un input oculto, una por línea (lo que espera la action).
  */
-export default function ImagePicker({ name, defaultValue = [], library: initialLibrary = [] }) {
+export default function ImagePicker({ name, defaultValue = [] }) {
   const [sel, setSel] = useState(defaultValue.filter(Boolean));
-  const [library, setLibrary] = useState(initialLibrary);
+  const [library, setLibrary] = useState(null); // null = todavía no se pidió
+  const [loadingLib, setLoadingLib] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
@@ -23,6 +24,21 @@ export default function ImagePicker({ name, defaultValue = [], library: initialL
     return n;
   });
 
+  const openLibrary = async () => {
+    setOpen(true);
+    if (library !== null) return;
+    setLoadingLib(true);
+    try {
+      const res = await fetch('/api/admin/upload');
+      const data = await res.json();
+      setLibrary(res.ok ? data.urls : []);
+    } catch {
+      setLibrary([]);
+    } finally {
+      setLoadingLib(false);
+    }
+  };
+
   const upload = async (files) => {
     if (!files.length) return;
     setError('');
@@ -33,7 +49,7 @@ export default function ImagePicker({ name, defaultValue = [], library: initialL
       const res = await fetch('/api/admin/upload', { method: 'POST', body });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'No se pudo subir la imagen.');
-      setLibrary((l) => [...data.urls, ...l]);
+      setLibrary((l) => [...data.urls, ...(l || [])]);
       setSel((s) => [...s, ...data.urls]);
     } catch (e) {
       setError(e.message || 'No se pudo subir la imagen.');
@@ -79,15 +95,14 @@ export default function ImagePicker({ name, defaultValue = [], library: initialL
         </div>
       )}
 
-      {!!library.length && (
-        <button type="button" className="btn btn-ghost" style={{ fontSize: 12.5, marginTop: 14 }} onClick={() => setOpen(true)}>
-          O elegí una foto que ya subiste antes ({library.length})
-        </button>
-      )}
+      <button type="button" className="btn btn-ghost" style={{ fontSize: 12.5, marginTop: 14 }} onClick={openLibrary}>
+        O elegí una foto que ya subiste antes
+      </button>
 
       {open && (
         <ImageLibraryModal
-          library={library}
+          library={library || []}
+          loading={loadingLib}
           selected={new Set(sel)}
           onPick={toggle}
           onClose={() => setOpen(false)}

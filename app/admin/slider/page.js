@@ -1,6 +1,5 @@
 import { guard } from '../guard';
 import * as db from '@/lib/db';
-import { listUploads } from '@/lib/shop';
 import { saveHero, addSlide, deleteSlide } from '../actions';
 import { ActionForm, Submit, Text, Area } from '@/components/admin-ui';
 import SinglePicker from '@/components/SinglePicker';
@@ -8,7 +7,6 @@ import SinglePicker from '@/components/SinglePicker';
 export default async function Slider() {
   await guard('content');
   const slides = (await db.read('site')).hero;
-  const library = await listUploads();
   return (
     <>
       <h1>Slider del inicio</h1>
@@ -28,7 +26,7 @@ export default async function Slider() {
             </div>
             <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 340px', gap: 20, alignItems: 'start' }}>
               <Area label="Texto" name="copy" defaultValue={s.copy} style={{ minHeight: 80 }} />
-              <SinglePicker name="image" defaultValue={s.image} library={library} ratio="16/10" />
+              <SinglePicker name="image" defaultValue={s.image} ratio="16/10" />
             </div>
           </fieldset>
         ))}

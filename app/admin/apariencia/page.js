@@ -1,6 +1,5 @@
 import { guard } from '../guard';
 import * as db from '@/lib/db';
-import { listUploads } from '@/lib/shop';
 import { saveTheme } from '../actions';
 import { ActionForm, Submit, Text, Check, Color, Field } from '@/components/admin-ui';
 import SinglePicker from '@/components/SinglePicker';
@@ -10,7 +9,6 @@ const FUENTES = ['Archivo', 'Inter', 'Work Sans', 'DM Sans', 'Manrope', 'Libre F
 export default async function Apariencia() {
   await guard('appearance'); // sólo rol admin
   const t = (await db.read('site')).theme;
-  const library = await listUploads();
   return (
     <>
       <h1>Apariencia y tipografías</h1>
@@ -64,7 +62,7 @@ export default async function Apariencia() {
           </div>
           <div className="f" style={{ marginTop: 16 }}>
             <label>Imagen de fondo del sitio<span className="hint"> — opcional</span></label>
-            <SinglePicker name="bodyBgImage" defaultValue={t.bodyBgImage} library={library} ratio="16/9" />
+            <SinglePicker name="bodyBgImage" defaultValue={t.bodyBgImage} ratio="16/9" />
           </div>
         </fieldset>
 
