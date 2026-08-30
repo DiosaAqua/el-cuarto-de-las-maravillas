@@ -79,20 +79,33 @@ export async function saveProduct(prev, form) {
   redirect('/admin/productos?ok=1');
 }
 
-export async function deleteProduct(prev, form) {
-  try { await auth.requirePermission('products'); } catch { return fail('No tenés permisos.'); }
+/** Vuelve al listado de productos preservando la búsqueda y la página en la
+ *  que estaba — así el admin no "salta" al principio de 2000+ productos
+ *  después de tocar un botón. */
+const backToList = (form) => {
+  const qs = new URLSearchParams();
+  const q = str(form.get('q'), 200);
+  const page = str(form.get('page'), 10);
+  if (q) qs.set('q', q);
+  if (page && page !== '1') qs.set('page', page);
+  const query = qs.toString();
+  redirect('/admin/productos' + (query ? '?' + query : ''));
+};
+
+export async function deleteProduct(form) {
+  try { await auth.requirePermission('products'); } catch { return; }
   const id = str(form.get('id'), 20);
   await db.update('products', (list) => list.filter((p) => p.id !== id));
   refresh();
-  return done('Producto eliminado.');
+  backToList(form);
 }
 
-export async function togglePublished(prev, form) {
-  try { await auth.requirePermission('products'); } catch { return fail('No tenés permisos.'); }
+export async function togglePublished(form) {
+  try { await auth.requirePermission('products'); } catch { return; }
   const id = str(form.get('id'), 20);
   await db.update('products', (list) => { const p = list.find((x) => x.id === id); if (p) p.published = !p.published; });
   refresh();
-  return done('Actualizado.');
+  backToList(form);
 }
 
 /* ---------- contenido (textos del sitio) ---------- */
