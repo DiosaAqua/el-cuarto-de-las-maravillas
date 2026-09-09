@@ -24,7 +24,7 @@ export default function ProductCard({ p }) {
       {p.freeShipping && <div className="cuotas" style={{ color: 'var(--muted)' }}>Envío gratis</div>}
       <button className="btn btn-ghost add" style={{ justifyContent: 'center' }}
         onClick={() => cart.add(p.id)} disabled={p.stock < 1}>
-        {p.stock < 1 ? 'Sin stock' : 'Agregar al carrito'}
+        {p.stock < 1 ? 'Consultar stock' : 'Agregar al carrito'}
       </button>
     </article>
   );
