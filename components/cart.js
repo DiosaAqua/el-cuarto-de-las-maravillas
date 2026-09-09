@@ -53,7 +53,7 @@ export default function CartProvider({ site, children }) {
     const ship = !detailed.length ? 0 : freeFrom && subtotal >= freeFrom ? 0 : site.checkout.shippingCost || 0;
     return {
       lines: detailed, count: detailed.reduce((s, l) => s + l.qty, 0), subtotal, ship, total: subtotal + ship,
-      favs, open, setOpen, toast, name, setName,
+      favs, open, setOpen, toast, name, setName, whatsapp: site.brand.whatsapp,
       add(id, qty = 1) {
         const cur = lines.find((l) => l.id === id);
         persist(cur ? lines.map((l) => (l.id === id ? { ...l, qty: Math.min(20, l.qty + qty) } : l)) : [...lines, { id, qty }]);

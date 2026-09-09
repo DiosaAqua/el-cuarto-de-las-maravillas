@@ -22,10 +22,17 @@ export default function ProductCard({ p }) {
       <div className="price"><b>{ARS(p.price)}</b>{p.oldPrice && <s>{ARS(p.oldPrice)}</s>}</div>
       {cuota(p) && <div className="cuotas">{p.installments}× de {cuota(p)} sin interés</div>}
       {p.freeShipping && <div className="cuotas" style={{ color: 'var(--muted)' }}>Envío gratis</div>}
-      <button className="btn btn-ghost add" style={{ justifyContent: 'center' }}
-        onClick={() => cart.add(p.id)} disabled={p.stock < 1}>
-        {p.stock < 1 ? 'Consultar stock' : 'Agregar al carrito'}
-      </button>
+      {p.stock < 1 ? (
+        <a className="btn btn-ghost add" style={{ justifyContent: 'center' }}
+          href={'https://wa.me/' + cart?.whatsapp + '?text=' + encodeURIComponent('Hola! Quiero consultar un producto ' + p.name + ' (' + p.sku + ')')}
+          target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+          Consultar stock
+        </a>
+      ) : (
+        <button className="btn btn-ghost add" style={{ justifyContent: 'center' }} onClick={() => cart.add(p.id)}>
+          Agregar al carrito
+        </button>
+      )}
     </article>
   );
 }
