@@ -43,7 +43,7 @@ export async function saveProduct(prev, form) {
   if (!name) return fail('El nombre es obligatorio.');
   const price = num(form.get('price'));
   if (!price || price <= 0) return fail('Poné un precio válido.');
-  const images = str(form.get('images'), 2000).split('\n').map((s) => s.trim()).filter(Boolean);
+  const images = str(form.get('images'), 8000).split('\n').map((s) => s.trim()).filter(Boolean);
   const specs = str(form.get('specs'), 2000).split('\n').map((l) => l.split('|'))
     .filter((p) => p[0]?.trim()).map(([k, v]) => ({ k: k.trim(), v: (v || '').trim() }));
 
